@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Prediksi Kelulusan Siswa (ID3)</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f8;
+        padding: 40px;
+      }
+      .card {
+        max-width: 400px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+      }
+      select,
+      button {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+      }
+      button {
+        background: #4caf50;
+        color: white;
+        border: none;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+      #hasil {
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: center;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Prediksi Kelulusan</h2>
+
+      <label>Jam Belajar</label>
+      <select id="belajar">
+        <option value="Rendah">Rendah</option>
+        <option value="Sedang">Sedang</option>
+        <option value="Tinggi">Tinggi</option>
+      </select>
+
+      <label>Kehadiran</label>
+      <select id="rajin">
+        <option value="Jarang">Jarang</option>
+        <option value="Rajin">Rajin</option>
+      </select>
+
+      <label>Jam Tidur</label>
+      <select id="tidur">
+        <option value="Kurang">Kurang</option>
+        <option value="Cukup">Cukup</option>
+      </select>
+
+      <button onclick="prediksi()">Prediksi</button>
+
+      <div id="hasil"></div>
+    </div>
+
+    <script>
+      // 🔴 GANTI URL INI
+      const API_URL = "https://elicitable-syreeta-vexatiously.ngrok-free.dev";
+
+      async function prediksi() {
+        const belajar = document.getElementById("belajar").value;
+        const rajin = document.getElementById("rajin").value;
+        const tidur = document.getElementById("tidur").value;
+
+        document.getElementById("hasil").innerText = "Memproses...";
+
+        try {
+          const res = await fetch(API_URL + "/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ belajar, rajin, tidur }),
+          });
+
+          const data = await res.json();
+          document.getElementById("hasil").innerText =
+            "Hasil Prediksi: " + data.prediksi;
+        } catch (err) {
+          document.getElementById("hasil").innerText =
+            "Gagal terhubung ke server";
+        }
+      }
+    </script>
+  </body>
+</html>
