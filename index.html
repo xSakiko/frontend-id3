@@ -74,30 +74,24 @@
     </div>
 
     <script>
-      // 🔴 GANTI URL INI
-      const API_URL = "https://elicitable-syreeta-vexatiously.ngrok-free.dev/docs";
-
+      const API_URL = "https://eplicitable-syreeta-vexatiously.ngrok-free.dev";
+    
       async function prediksi() {
         const belajar = document.getElementById("belajar").value;
         const rajin = document.getElementById("rajin").value;
         const tidur = document.getElementById("tidur").value;
-
+    
         document.getElementById("hasil").innerText = "Memproses...";
-
-        try {
-          const res = await fetch(API_URL + "/predict", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ belajar, rajin, tidur }),
-          });
-
-          const data = await res.json();
-          document.getElementById("hasil").innerText =
-            "Hasil Prediksi: " + data.prediksi;
-        } catch (err) {
-          document.getElementById("hasil").innerText =
-            "Gagal terhubung ke server";
-        }
+    
+        const res = await fetch(API_URL + "/predict", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ belajar, rajin, tidur })
+        });
+    
+        const data = await res.json();
+        document.getElementById("hasil").innerText =
+          "Hasil Prediksi: " + data.prediksi;
       }
     </script>
   </body>
